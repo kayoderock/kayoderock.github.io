@@ -171,6 +171,7 @@
       width: 52px;
       height: 52px;
       border: 2px solid var(--ink);
+      background: var(--accent);
       color: var(--ink);
       transition: background-color 0.15s, color 0.15s;
     }
@@ -207,7 +208,12 @@
 
     /* ===== Header ===== */
     .hero {
-      background: var(--accent);
+      position: relative;
+      z-index: 1;
+      /* gold fades out to the right (and in from the top) so the backdrop shows through */
+      background:
+        linear-gradient(180deg, rgba(212, 175, 55, 0.95) 0, rgba(212, 175, 55, 0) 22%),
+        linear-gradient(90deg, var(--accent) 0, var(--accent) 38%, rgba(212, 175, 55, 0.7) 62%, rgba(212, 175, 55, 0.1) 100%);
       padding: clamp(16px, 2.5vw, 32px) var(--gutter) clamp(28px, 4vw, 48px);
     }
 
@@ -337,6 +343,55 @@
       white-space: nowrap;
     }
 
+    /* ===== Backdrop: full-screen image fixed behind the whole page (like splitev.co) =====
+       Sections scroll over it; it drifts down and settles as you scroll to the bottom. */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    .backdrop-image {
+      position: absolute;
+      inset: 0;
+      /* Placeholder. Swap for a photo: background: url('your-photo.jpg') center / cover; */
+      background:
+        repeating-linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0 2px, transparent 2px 22px),
+        linear-gradient(180deg, #45296B, var(--ink));
+    }
+
+    /* The round image: travels from right to left along an arc as you scroll.
+       --sun-x / --sun-y are set by the script below (in vw / vh). */
+    .backdrop-sun {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 18vmax;
+      height: 18vmax;
+      border-radius: 50%;
+      /* Placeholder. Swap for a photo: background: url('your-photo.jpg') center / cover; */
+      background: var(--accent);
+      transform: translate(calc(var(--sun-x, 78) * 1vw - 50%), calc(var(--sun-y, 40) * 1vh - 50%));
+      will-change: transform;
+    }
+
+    /* Sections are see-through panels, so the backdrop stays visible all the way down */
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    main .section {
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .contact {
+      position: relative;
+      z-index: 1;
+    }
+
     .hero-bottom {
       display: flex;
       flex-wrap: wrap;
@@ -431,8 +486,8 @@
     }
 
     /* ===== Experience ===== */
-    .experience {
-      background: var(--paper-alt);
+    main .experience {
+      background: rgba(245, 242, 248, 0.9);
     }
 
     .experience .container {
@@ -528,7 +583,7 @@
 
     /* ===== Contact ===== */
     .contact {
-      background: var(--ink);
+      background: rgba(46, 26, 71, 0.92);
       color: #FFFFFF;
     }
 
@@ -585,6 +640,10 @@
 
     /* Small screens: links collapse behind a stripe-style menu button */
     @media (max-width: 720px) {
+      .hero {
+        background: linear-gradient(180deg, var(--accent) 0, rgba(212, 175, 55, 0.92) 55%, rgba(212, 175, 55, 0.6) 100%);
+      }
+
       .js .nav {
         row-gap: 0;
       }
@@ -702,6 +761,12 @@
 </head>
 
 <body>
+
+  <!-- Full-screen backdrop behind the hero. Swap the placeholder in .backdrop-image for a photo. -->
+  <div class="backdrop" aria-hidden="true">
+    <div class="backdrop-image"></div>
+    <div class="backdrop-sun"></div>
+  </div>
 
   <!-- ================= HEADER ================= -->
   <header id="top" class="hero">
@@ -949,6 +1014,31 @@
         navToggle.focus();
       }
     });
+  </script>
+  <script>
+    // Round image: move it from right to left along an arc over the whole page scroll
+    const sun = document.querySelector('.backdrop-sun');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let sunTicking = false;
+
+    function updateSun() {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = reduceMotion.matches || scrollable <= 0 ? 0 : Math.min(Math.max(window.scrollY / scrollable, 0), 1);
+      const x = 78 - progress * 56;                    // 78vw (right) to 22vw (left)
+      const y = 40 - Math.sin(progress * Math.PI) * 25; // rises to 15vh mid-page, back to 40vh
+      sun.style.setProperty('--sun-x', x.toFixed(2));
+      sun.style.setProperty('--sun-y', y.toFixed(2));
+      sunTicking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!sunTicking) {
+        sunTicking = true;
+        requestAnimationFrame(updateSun);
+      }
+    }, { passive: true });
+    window.addEventListener('resize', updateSun);
+    updateSun();
   </script>
 </body>
 
