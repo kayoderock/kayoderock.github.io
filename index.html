@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kayode Balogun, Senior Frontend Engineer</title>
+  <meta name="description"
+    content="Senior frontend engineer in Lagos building payments, treasury and banking interfaces with Vue, React and TypeScript.">
+  <meta name="theme-color" content="#D4AF37">
+
+  <!-- Link previews (LinkedIn, Slack, X) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kayode Balogun, Senior Frontend Engineer">
+  <meta property="og:description"
+    content="Senior frontend engineer in Lagos building payments, treasury and banking interfaces with Vue, React and TypeScript.">
+  <meta name="twitter:card" content="summary">
+
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23D4AF37'/%3E%3Crect y='46' width='64' height='6' fill='%232E1A47'/%3E%3Crect y='56' width='64' height='3' fill='%232E1A47'/%3E%3Ctext x='32' y='38' font-family='Arial Narrow,Arial,sans-serif' font-weight='900' font-size='30' text-anchor='middle' fill='%232E1A47'%3EKR%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:wght@400;500;600&display=swap">
+
+  <style>
+    /* ===== Design tokens: change colors and fonts here ===== */
+    :root {
+      --accent: #D4AF37;
+      /* gold */
+      --ink: #2E1A47;
+      /* main text, dark sections */
+      --muted: #574C66;
+      /* secondary text */
+      --rule: #D3CCDC;
+      /* thin dividers */
+      --paper: #FFFFFF;
+      --paper-alt: #F5F2F8;
+      /* experience section background */
+
+      --font-display: 'Archivo', 'Arial Narrow', sans-serif;
+      --font-body: 'Public Sans', 'Helvetica Neue', Helvetica, sans-serif;
+
+      --page-width: 1240px;
+      --gutter: clamp(20px, 5vw, 72px);
+      --section-space: clamp(64px, 9vw, 120px);
+    }
+
+    /* ===== Base ===== */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: var(--ink);
+    }
+
+    a:focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    .container {
+      max-width: var(--page-width);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: var(--section-space) var(--gutter);
+    }
+
+    /* Section headings */
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-stretch: 75%;
+      font-size: clamp(40px, 5vw, 64px);
+      line-height: 1;
+    }
+
+    /* Buttons */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 52px;
+      padding: 0 26px;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      border: 2px solid transparent;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .button-dark {
+      background: var(--ink);
+      color: #FFFFFF;
+    }
+
+    .button-outline {
+      border-color: var(--ink);
+    }
+
+    .button-accent {
+      background: var(--accent);
+      color: var(--ink);
+    }
+
+    .button-light-outline {
+      border-color: #FFFFFF;
+      color: #FFFFFF;
+    }
+
+    .button-dark:hover {
+      background: #45296B;
+    }
+
+    .button-outline:hover {
+      background: var(--ink);
+      color: #FFFFFF;
+    }
+
+    .button-accent:hover {
+      background: #FFFFFF;
+    }
+
+    .button-light-outline:hover {
+      background: #FFFFFF;
+      color: var(--ink);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Square icon links (hero: email, LinkedIn, GitHub) */
+    .icon-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .icon-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border: 2px solid var(--ink);
+      color: var(--ink);
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .icon-button svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .icon-button:hover {
+      background: var(--ink);
+      color: var(--accent);
+    }
+
+    /* Double stripe, like a danfo bus */
+    .stripes {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stripes span {
+      display: block;
+      background: currentColor;
+    }
+
+    .stripes span:first-child {
+      height: 14px;
+    }
+
+    .stripes span:last-child {
+      height: 6px;
+    }
+
+    /* ===== Header ===== */
+    .hero {
+      background: var(--accent);
+      padding: clamp(16px, 2.5vw, 32px) var(--gutter) clamp(28px, 4vw, 48px);
+    }
+
+    .hero .container {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(40px, 7vw, 96px);
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 18px;
+      text-decoration: none;
+      padding: 12px 0;
+    }
+
+    /* "KR" expands to "KayodeRock" on hover: hidden letters widen and slide up into place */
+    .nav-logo-more {
+      display: inline-grid;
+      grid-template-columns: 0fr;
+      vertical-align: top;
+      transition: grid-template-columns 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .nav-logo-more>span {
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .nav-logo-more>span>span {
+      display: inline-block;
+      transform: translateY(110%);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.3s;
+    }
+
+    @media (hover: hover) {
+      .nav-logo:hover .nav-logo-more {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-logo:hover .nav-logo-more>span>span {
+        transform: none;
+        opacity: 1;
+      }
+    }
+
+    .nav-logo:focus-visible .nav-logo-more {
+      grid-template-columns: 1fr;
+    }
+
+    .nav-logo:focus-visible .nav-logo-more>span>span {
+      transform: none;
+      opacity: 1;
+    }
+
+    .nav-links-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 28px;
+      font-weight: 500;
+    }
+
+    /* Menu button, only shown on small screens */
+    .nav-toggle {
+      display: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      padding: 12px 0;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-stretch: 68%;
+      font-size: clamp(72px, 15vw, 220px);
+      line-height: 0.86;
+      letter-spacing: -0.02em;
+    }
+
+    /* Hero name: letters rise one by one out of a mask on page load */
+    .hero-name-line {
+      display: block;
+      overflow: hidden;
+      /* extra room so tall letters and the "g" are not clipped by the tight line-height */
+      padding: 0.12em 0 0.16em;
+      margin: -0.12em 0 -0.16em;
+    }
+
+    .hero-name-line>span {
+      display: inline-block;
+      animation: hero-letter-rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      animation-delay: calc(var(--i) * 45ms + 150ms);
+    }
+
+    @keyframes hero-letter-rise {
+      from {
+        transform: translateY(140%) rotate(8deg);
+      }
+
+      to {
+        transform: none;
+      }
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .hero-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 28px;
+      margin-top: 28px;
+    }
+
+    .hero-intro {
+      max-width: 34ch;
+      font-size: clamp(20px, 2.2vw, 28px);
+      line-height: 1.35;
+      font-weight: 500;
+    }
+
+    .hero .stripes {
+      color: var(--ink);
+      margin-top: clamp(40px, 6vw, 72px);
+    }
+
+    /* ===== Two-column layout (title left, content right) ===== */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 40px 64px;
+      align-items: start;
+    }
+
+    .split-intro {
+      margin-top: 16px;
+      max-width: 32ch;
+      color: var(--muted);
+    }
+
+    /* Ruled lists: thick line on top, thin lines between */
+    .ruled>* {
+      border-top: 1px solid var(--rule);
+    }
+
+    .ruled>*:first-child {
+      border-top: 2px solid var(--ink);
+    }
+
+    .ruled>*:last-child {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ===== Work ===== */
+    .work-item {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 8px 32px;
+      padding: 28px 0;
+    }
+
+    .work-item h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .work-body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      max-width: 60ch;
+    }
+
+    .work-link {
+      display: inline-flex;
+      gap: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 4px 0;
+    }
+
+    .work-link-text {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .work-link-arrow {
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+
+    .work-link:hover .work-link-arrow {
+      transform: translateX(4px);
+    }
+
+    /* ===== Experience ===== */
+    .experience {
+      background: var(--paper-alt);
+    }
+
+    .experience .container {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .job {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 12px 64px;
+      padding: 36px 0;
+    }
+
+    .job-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .job-meta h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    .job-role {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .job-dates {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .job-details {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 62ch;
+    }
+
+    /* ===== Skills ===== */
+    .skills .container {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px 48px;
+    }
+
+    .skill-group {
+      padding-top: 20px;
+      border-top: 2px solid var(--ink);
+    }
+
+    .skill-group h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .skill-group p {
+      line-height: 1.7;
+    }
+
+    /* ===== Education ===== */
+    .education {
+      padding-top: 0;
+    }
+
+    .education-item {
+      padding: 20px 0;
+    }
+
+    .education-item .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .education-item .school {
+      font-size: 16px;
+      color: var(--muted);
+    }
+
+    /* ===== Contact ===== */
+    .contact {
+      background: var(--ink);
+      color: #FFFFFF;
+    }
+
+    .contact .container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .contact .stripes {
+      color: var(--accent);
+      max-width: 240px;
+    }
+
+    .contact-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-stretch: 68%;
+      font-size: clamp(48px, 8vw, 112px);
+      line-height: 0.92;
+      max-width: 14ch;
+    }
+
+    .contact-text {
+      max-width: 48ch;
+      font-size: 19px;
+      color: #DDD5E8;
+    }
+
+    .contact-location {
+      font-size: 15px;
+      color: #BFB4CE;
+    }
+
+    .contact a:focus-visible {
+      outline-color: var(--accent);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 1000px) {
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+
+      .split,
+      .job,
+      .work-item {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Small screens: links collapse behind a stripe-style menu button */
+    @media (max-width: 720px) {
+      .js .nav {
+        row-gap: 0;
+      }
+
+      .js .nav-toggle {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        background: none;
+        border: 2px solid var(--ink);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .nav-toggle span {
+        display: block;
+        width: 22px;
+        background: currentColor;
+        transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+      }
+
+      .nav-toggle span:first-child {
+        height: 4px;
+      }
+
+      .nav-toggle span:last-child {
+        height: 2px;
+      }
+
+      .nav.is-open .nav-toggle span:first-child {
+        transform: translateY(4px) rotate(45deg);
+      }
+
+      .nav.is-open .nav-toggle span:last-child {
+        transform: translateY(-4px) rotate(-45deg);
+      }
+
+      .nav-toggle:focus-visible {
+        outline: 3px solid var(--ink);
+        outline-offset: 3px;
+      }
+
+      .js .nav-links {
+        flex-basis: 100%;
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+      }
+
+      .js .nav.is-open .nav-links {
+        grid-template-rows: 1fr;
+      }
+
+      .js .nav-links-inner {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 0;
+        min-height: 0;
+        overflow: hidden;
+        padding-top: 16px;
+        visibility: hidden;
+        transition: visibility 0s 0.35s;
+      }
+
+      .js .nav.is-open .nav-links-inner {
+        visibility: visible;
+        transition: none;
+      }
+
+      .js .nav-links-inner a {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-stretch: 75%;
+        font-size: 32px;
+        line-height: 1.1;
+        padding: 14px 0;
+        border-top: 1px solid var(--ink);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .button,
+      .nav-logo-more,
+      .nav-logo-more>span>span {
+        transition: none;
+      }
+
+      .hero-name-line>span {
+        animation: none;
+      }
+
+      .work-link-arrow,
+      .icon-button,
+      .nav-toggle span,
+      .js .nav-links {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header id="top" class="hero">
+    <div class="container">
+      <nav class="nav" aria-label="Main">
+        <a class="nav-logo" href="#top" aria-label="Kayode Balogun, back to top">K<span class="nav-logo-more"
+            aria-hidden="true"><span><span>ayode</span></span></span>R<span class="nav-logo-more"
+            aria-hidden="true"><span><span>ock</span></span></span></a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+          <span></span><span></span>
+        </button>
+        <div class="nav-links" id="nav-links">
+          <div class="nav-links-inner">
+            <a href="#work">Work</a>
+            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+      <div>
+        <h1 class="hero-name">
+          <span class="visually-hidden">Kayode Balogun</span>
+          <span class="hero-name-line" aria-hidden="true"><span style="--i: 0">K</span><span
+              style="--i: 1">a</span><span style="--i: 2">y</span><span style="--i: 3">o</span><span
+              style="--i: 4">d</span><span style="--i: 5">e</span></span>
+          <span class="hero-name-line" aria-hidden="true"><span style="--i: 6">B</span><span
+              style="--i: 7">a</span><span style="--i: 8">l</span><span style="--i: 9">o</span><span
+              style="--i: 10">g</span><span style="--i: 11">u</span><span style="--i: 12">n</span></span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-intro">Senior frontend engineer in Lagos: Building solutions to grand societal
+            challenges, using mathematics, computer science, economics and AI as a tool.</p>
+          <div class="icon-row">
+            <a class="icon-button" href="mailto:kayoderock@gmail.com" aria-label="Email" title="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-10 6L2 7" />
+              </svg>
+            </a>
+            <a class="icon-button" href="https://linkedin.com/in/kayode-balogun" target="_blank" rel="noopener"
+              aria-label="LinkedIn" title="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+            </a>
+            <a class="icon-button" href="https://github.com/kayoderock" target="_blank" rel="noopener"
+              aria-label="GitHub" title="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container stripes" aria-hidden="true"><span></span><span></span></div>
+  </header>
+
+  <main>
+    <!-- ================= SELECTED WORK ================= -->
+    <section id="work" class="section">
+      <div class="container split">
+        <div>
+          <h2 class="section-title">Work</h2>
+          <p class="split-intro">Three threads: software that moves money, research in economics and AI, and giving
+            back.</p>
+        </div>
+
+        <div class="ruled">
+          <article class="work-item">
+            <h3>Frontend</h3>
+            <div class="work-body">
+              <p>Over 7 years building fintech frontends for payments, treasury and banking products with Vue, React
+                and TypeScript, from first commit to production at scale.</p>
+              <a class="work-link"
+                href="https://drive.google.com/file/d/1RdejfitVI-TSpdUCKPtqxqsU-jlcaU_-/view?usp=sharing"
+                target="_blank" rel="noopener"><span class="work-link-text">View my CV</span><span
+                  class="work-link-arrow" aria-hidden="true">&rarr;</span></a>
+            </div>
+          </article>
+          <article class="work-item">
+            <h3>Economics &amp; AI</h3>
+            <div class="work-body">
+              <p>Research at the intersection of economics, data and machine learning.</p>
+              <a class="work-link" href="https://www.researchgate.net/profile/Kayode-Balogun-8/research" target="_blank"
+                rel="noopener"><span class="work-link-text">ResearchGate profile</span><span class="work-link-arrow"
+                  aria-hidden="true">&rarr;</span></a>
+            </div>
+          </article>
+          <article class="work-item">
+            <h3>Impact</h3>
+            <div class="work-body">
+              <p>GiveChief is dedicated to providing access to book to students from beautiful donors.</p>
+              <a class="work-link" href="https://givechief.org" target="_blank" rel="noopener"><span
+                  class="work-link-text">Visit GiveChief</span><span class="work-link-arrow"
+                  aria-hidden="true">&rarr;</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCE ================= -->
+    <section id="experience" class="section experience">
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+
+        <div class="ruled">
+          <article class="job">
+            <div class="job-meta">
+              <h3>SplitEV</h3>
+              <p class="job-role">Senior Frontend Engineer</p>
+              <p class="job-dates">March 2025 to present</p>
+            </div>
+            <div class="job-details">
+              <p>Lead the core web applications team, setting architecture, state management and component standards in
+                React, and owning the roadmap for the web dashboard platform.</p>
+              <p>Restructured the frontend around semantic HTML for better search ranking and accessibility, and cut
+                First Contentful Paint by 80%.</p>
+              <p>Drove compliance work and CI/CD improvements that shortened App Store and Play Store publication, and
+                contributed reusable Flutter components to the EV charging app.</p>
+            </div>
+          </article>
+
+          <article class="job">
+            <div class="job-meta">
+              <h3>Multigate</h3>
+              <p class="job-role">Software Engineer</p>
+              <p class="job-dates">November 2019 to October 2024</p>
+            </div>
+            <div class="job-details">
+              <p>Led frontend architecture for onboarding, authentication and authorization across cross-border,
+                multi-currency treasury applications serving 1M+ users and $10M+ in weekly transactions.</p>
+              <p>Integrated Visa Cybersource and Mastercard MPGS payment engines and Plaid bank connections, backed by
+                automated penetration and UI test suites and fully compliant with PCI security standards.</p>
+              <p>Built reporting dashboards supporting 200,000+ weekly transaction reports and real-time reconciliation,
+                mentored mid-level engineers, and wrote the technical research behind build-vs-buy decisions approved by
+                the engineering board.</p>
+            </div>
+          </article>
+
+          <article class="job">
+            <div class="job-meta">
+              <h3>Sterling Bank</h3>
+              <p class="job-role">Frontend Engineer</p>
+              <p class="job-dates">March 2019 to November 2019</p>
+            </div>
+            <div class="job-details">
+              <p>Built modular Vue.js applications for a corporate banking platform serving 2M+ business users, tested
+                with Jest and Vue Test Utils.</p>
+              <p>Mentored intern engineers in JavaScript and frontend architecture; all became independent contributors
+                within six months.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SKILLS ================= -->
+    <section id="skills" class="section skills">
+      <div class="container">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-group">
+            <h3>Frontend</h3>
+            <p>Vue.js, React, TypeScript, JavaScript, HTML, CSS, Flutter, component systems, micro-frontends, state
+              management</p>
+          </div>
+          <div class="skill-group">
+            <h3>Testing and delivery</h3>
+            <p>Jest, Vue Test Utils, Cypress, Playwright, Git, Docker, CircleCI, GitHub Actions</p>
+          </div>
+          <div class="skill-group">
+            <h3>Payments and security</h3>
+            <p>Visa Cybersource, Mastercard MPGS, Plaid, SWIFT, PCI DSS, OWASP Top 10, AML/CFT compliance</p>
+          </div>
+          <div class="skill-group">
+            <h3>Cloud and data</h3>
+            <p>AWS, Azure, GCP, Node.js, PostgreSQL, MongoDB, Python, machine learning, econometrics</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EDUCATION ================= -->
+    <section id="education" class="section education">
+      <div class="container split">
+        <h2 class="section-title">Education</h2>
+        <div class="ruled">
+          <div class="education-item">
+            <p class="title">MicroMasters in Data, Economics, and Design of Policy</p>
+            <p class="school">Massachusetts Institute of Technology</p>
+          </div>
+          <div class="education-item">
+            <p class="title">Data Science and Machine Learning: Making Data-Driven Decisions</p>
+            <p class="school">MIT Professional Education</p>
+          </div>
+          <div class="education-item">
+            <p class="title">BSc Computer Science</p>
+            <p class="school">University of Lagos</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= CONTACT ================= -->
+  <footer id="contact" class="section contact">
+    <div class="container">
+      <div class="stripes" aria-hidden="true"><span></span><span></span></div>
+      <h2 class="contact-title">Building something that creates values ?</h2>
+      <p class="contact-text">I'm open to senior frontend roles in fintech and payments, research in economics and AI,
+        giving. Reach me.</p>
+      <div class="button-row">
+        <a class="button button-accent" href="mailto:kayoderock@gmail.com">kayoderock@gmail.com</a>
+        <a class="button button-light-outline" href="https://linkedin.com/in/kayode-balogun">LinkedIn</a>
+      </div>
+      <p class="contact-location">Lagos, Nigeria</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu: open/close, and close after picking a link or pressing Escape
+    const nav = document.querySelector('.nav');
+    const navToggle = document.querySelector('.nav-toggle');
+
+    function setMenu(open) {
+      nav.classList.toggle('is-open', open);
+      navToggle.setAttribute('aria-expanded', open);
+      navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
+    navToggle.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
+    nav.querySelectorAll('.nav-links a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+        setMenu(false);
+        navToggle.focus();
+      }
+    });
+  </script>
+</body>
+
+</html>
